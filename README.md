@@ -4,7 +4,7 @@ A simple CLI utility for wetting all user images from fapodrop.com.
 
 ## Installation
 
-Just download the latest release for your OS from the [releases](https://github.com/nakrovati/fapodrop-downloader/releases) section.
+Just download the latest release for your OS from the [releases](https://github.com/nakrovati/fapodroper/releases) section.
 
 ## Usage
 
@@ -13,11 +13,11 @@ At startup, you are required to specify `-u` (or `--username`) - username (altho
 ### For Windows
 
 ```sh
-fapodrop-downloader.exe --username {user}
+fapodroper.exe --username {user}
 ```
 
 ### For macOS and Linux
 
 ```sh
-./fapodrop-downloader --username {user}
+./fapodroper --username {user}
 ```

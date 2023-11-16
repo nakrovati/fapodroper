@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/fapodrop-downloader/internal/downloader"
+	"github.com/fapodroper/internal/downloader"
 	"github.com/spf13/cobra"
 )
 
 func main() {
-	var rootCmd = &cobra.Command{Use: "img-downloader"}
+	var rootCmd = &cobra.Command{Use: "fapodroper"}
 
 	var username string
 

@@ -1,4 +1,4 @@
-module github.com/fapodrop-downloader
+module github.com/fapodroper
 
 go 1.21.3
 
