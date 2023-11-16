@@ -1,0 +1,45 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+
+    - name: Build for Linux
+      run: GOOS=linux go build -o fapodrop-downloader_linux cmd/fapodrop-downloader/main.go
+
+    - name: Build for macOS
+      run: GOOS=darwin go build -o fapodrop-downloader_macos cmd/fapodrop-downloader/main.go
+
+    - name: Build for Windows
+      run: GOOS=windows go build -o fapodrop-downloader_windows.exe cmd/fapodrop-downloader/main.go
+
+    - name: Test
+      run: go test -v ./...
+      
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          fapodrop-downloader_linux
+          fapodrop-downloader_macos
+          fapodrop-downloader_windows.exe
+            
