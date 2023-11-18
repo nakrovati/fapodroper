@@ -13,11 +13,15 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func DownloadImages(username string) {
+func DownloadImages(username string, start, end int) {
+	if start > end {
+		log.Fatalf("ERROR: end should be greater than or equal to start")
+	}
+
 	baseURL := "https://fapodrop.com/"
 
 	if !userExists(baseURL + username) {
-		log.Fatalf("User %s not found\n", username)
+		log.Fatalf("ERROR: user %s not found\n", username)
 	}
 
 	downloadDirectory := filepath.Join("images", username)
@@ -29,14 +33,13 @@ func DownloadImages(username string) {
 		downloadImage(baseURL, imageSrc, downloadDirectory)
 	})
 
-	maxImagesCount := 9999
-	for i := 1; i < maxImagesCount; i++ {
+	for i := start; i < end; i++ {
 		imageID := fmt.Sprintf("%04d", i)
 		imageURL := baseURL + path.Join(username, "media", imageID)
 
 		err := c.Visit(imageURL)
 		if err != nil {
-			log.Fatalf("Image page not found: %v", err)
+			log.Fatalf("ERROR: image page not found: %v", err)
 		}
 
 		if i%10 == 0 {
