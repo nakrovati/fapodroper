@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
-	"path"
 	"path/filepath"
 	"time"
 
@@ -35,9 +35,12 @@ func DownloadImages(username string, start, end int) {
 
 	for i := start; i < end; i++ {
 		imageID := fmt.Sprintf("%04d", i)
-		imageURL := baseURL + path.Join(username, "media", imageID)
+		imageURL, err := url.JoinPath(baseURL, username, "media", imageID)
+		if err != nil {
+			logger.ErrorLog.Fatal(err)
+		}
 
-		err := c.Visit(imageURL)
+		err = c.Visit(imageURL)
 		if err != nil {
 			logger.ErrorLog.Fatalf("ERROR: image page not found: %v", err)
 		}
